@@ -15,20 +15,36 @@ const Student = {
     house:"",
 }
 
+const settings = {
+    filter: "all",
+    sortBy: "firstname",
+    sortDir: "asc"
+}
+
+let filterBy = "all";
+
 
 function start( ) {
     console.log("ready");
+
+    registerButtons();
     loadJSON();
 }
 
+function registerButtons() {
+    document.querySelectorAll("[data-action='filter']")
+        .forEach(button => button.addEventListener("click", selectFilter));
 
-function loadJSON() {
-    fetch("https://petlatkea.dk/2021/hogwarts/students.json")
-    .then( response => response.json() )
-    .then( jsonData => {
-        // when loaded, prepare objects
-        prepareObjects( jsonData );
-    });
+        document.querySelectorAll("[data-action='sort']")
+        .forEach(button => button.addEventListener("click", selectSort));
+}
+
+async function loadJSON() {
+    const response = await fetch("https://petlatkea.dk/2021/hogwarts/students.json");
+    const jsonData = await response.json();
+    
+    // when loaded, prepare data objects
+    prepareObjects( jsonData );
 }
 
 function prepareObjects( jsonData ) {
@@ -83,15 +99,124 @@ function prepareObjects( jsonData ) {
 
         allStudents.push(newStudent);
 
+        
+        /*
+        //not sure about this
         const split = new Set([firstNameFinal, middleNameFinal, lastNameFinal]);
         let nameSplit = Array.from(split);
+        */
     })
 
-    displayList();
+    displayList(allStudents);
 }
 
+function selectFilter(event) {
+    const filter = event.target.dataset.filter;
+    console.log(`User selected ${filter}`);
+    //filterList(filter);
+    setFilter(filter);
+}
 
-function displayList() {
+function setFilter(filter) {
+    settings.filterBy = filter;
+    buildList()
+}
+
+function filterList(filteredList) {
+    
+    ///////HOUSE FILTER///////
+    if (settings.filterBy === "gryffindor") {
+    //create a filtered list of only Gryffindor students
+    filteredList = allStudents.filter(isGryffindor);
+
+    } else if (settings.filterBy === "hufflepuff") {
+    //create a filtered list of only Hufflepuff students
+    filteredList = allStudents.filter(isHufflepuff);
+
+    } else if (settings.filterBy === "ravenclaw") {
+    //create a filtered list of only Ravenclaw students
+    filteredList = allStudents.filter(isRavenclaw);
+
+    } else if (settings.filterBy === "slytherin") {
+    //create a filtered list of only Slytherin students
+    filteredList = allStudents.filter(isSlytherin);
+    }
+
+    return filteredList;
+}
+
+function isGryffindor(student) {
+    return student.type === "gryffindor";
+}
+
+function isHufflepuff(student) {
+    return student.type === "hufflepuff";
+}
+
+function isRavenclaw(student) {
+    return student.type === "ravenclaw";
+}
+
+function isSlytherin(student) {
+    return student.type === "slytherin";
+}
+
+function selectSort(event) {
+    const sortBy = event.target.dataset.sort;
+    const sortDir = event.target.dataset.sortDirection;
+
+    //find "old" sortby element and remove .sortBy
+    const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
+    oldElement.classList.remove("sortby");
+
+    //indicate active sort
+    event.target.classList.add("sortby");
+    
+    //toggle direction
+    if (sortDir === "asc") {
+        event.target.dataset.sortDirection = "desc";
+    } else {
+        event.target.dataset.sortDirection = "asc";
+    }
+
+    console.log(`User selected ${sortBy} - ${sortDir}`);
+    setSort(sortBy, sortDir);
+}
+
+function setSort(sortBy, sortDir){
+    settings.sortBy = sortBy;
+    settings.sortDir = sortDir;
+    buildList();
+}
+
+function sortList(sortedList) {
+    let direction = 1;
+    if (settings.sortDir === "desc") {
+        direction = -1;
+    } else  {
+        settings.direction = 1;
+    }
+
+    sortedList = sortedList.sort(sortByProperty);
+
+    function sortByProperty(studentA, studentB) {
+        if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
+            return -1 * direction;
+        } else {
+            return 1 * direction;
+        }
+    }
+    return sortedList;
+}
+
+function buildList() {
+    const currentList = filterList(allStudents);
+    const sortedList = sortList(currentList);
+
+    displayList(sortedList);
+}
+
+function displayList(allStudents) {
     // clear the list
     document.querySelector("#list tbody").innerHTML = "";
 
@@ -99,7 +224,7 @@ function displayList() {
     allStudents.forEach( displayStudent );
 }
 
-function displayStudent ( newStudent ) {
+function displayStudent (newStudent) {
     // create clone
     const clone = document.querySelector("template#student").content.cloneNode(true);
 
