@@ -3,7 +3,6 @@
 window.addEventListener("DOMContentLoaded", start);
 
 const allStudents = [];
-//const studentsDataCleaned = []; //not sure if i need this
 
 //This defines a template (prototype) for the data objects
 const Student = {
@@ -50,10 +49,7 @@ async function loadJSON() {
 function prepareObjects( jsonData ) {
     jsonData.forEach( jsonObject => {
         // we use "Student" prototype to create "student"
-        const student = Object.create(Student);
-
-        //const fullName = jsonObject.fullname;
-        
+        const student = Object.create(Student);        
 
         const fullNameTrim = jsonObject.fullname.trim();
         const firstSpace = fullNameTrim.indexOf(" ");
@@ -75,18 +71,6 @@ function prepareObjects( jsonData ) {
         let lastNameFinal = lastNameTrim.charAt(0).toUpperCase() + lastNameTrim.substring(1).toLowerCase();
        
 
-        //FULLNAME
-        /*function showFullname(firstName, middleName, lastName){
-            if(middleName) {
-            const fullNameFinal = `${firstNameFinal} ${middleNameFinal} ${lastNameFinal}`;
-            //console.log(fullNameFinal);
-            } else {
-            const fullNameFinal = `${firstNameFinal} ${lastNameFinal}`;
-            //console.log(fullNameFinal);
-            }
-        }
-        showFullname();*/
-
         //HOUSE
         const house = jsonObject.house;
         let houseTrim = house.trim();
@@ -101,13 +85,6 @@ function prepareObjects( jsonData ) {
         student.house = houseFinal;
 
         allStudents.push(student);
-
-        
-        /*
-        //not sure about this
-        const split = new Set([firstNameFinal, middleNameFinal, lastNameFinal]);
-        let nameSplit = Array.from(split);
-        */
     });
 
     displayList(allStudents);
