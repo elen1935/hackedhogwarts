@@ -53,7 +53,7 @@ function prepareObjects( jsonData ) {
         const student = Object.create(Student);
 
         //const fullName = jsonObject.fullname;
-        const house = jsonObject.house;
+        
 
         const fullNameTrim = jsonObject.fullname.trim();
         const firstSpace = fullNameTrim.indexOf(" ");
@@ -88,9 +88,11 @@ function prepareObjects( jsonData ) {
         showFullname();*/
 
         //HOUSE
+        const house = jsonObject.house;
         let houseTrim = house.trim();
         let houseFinal = houseTrim.charAt(0).toUpperCase() + houseTrim.substring(1).toLowerCase();
 
+        
         student.firstName = firstNameFinal;
         student.middleName = middleNameFinal;
         student.lastName = lastNameFinal;
@@ -106,7 +108,7 @@ function prepareObjects( jsonData ) {
         const split = new Set([firstNameFinal, middleNameFinal, lastNameFinal]);
         let nameSplit = Array.from(split);
         */
-    })
+    });
 
     displayList(allStudents);
 }
@@ -143,23 +145,41 @@ function filterList(filteredList) {
     filteredList = allStudents.filter(isSlytherin);
     }
 
+    //TO DO: FILTER EXPELLED/NON-EXPELLED
     return filteredList;
 }
 
 function isGryffindor(student) {
-    return student.type === "gryffindor";
+    console.log("isGryffindor function");
+    if (student.house === "Gryffindor") {
+        return true;
+      } else {
+        return false;
+      }
 }
 
 function isHufflepuff(student) {
-    return student.type === "hufflepuff";
+    if (student.house === "Hufflepuff") {
+        return true;
+      } else {
+        return false;
+      }
 }
 
 function isRavenclaw(student) {
-    return student.type === "ravenclaw";
+    if (student.house === "Ravenclaw") {
+        return true;
+      } else {
+        return false;
+      }
 }
 
 function isSlytherin(student) {
-    return student.type === "slytherin";
+    if (student.house === "Slytherin") {
+        return true;
+      } else {
+        return false;
+      }
 }
 
 function selectSort(event) {
@@ -193,8 +213,10 @@ function setSort(sortBy, sortDir){
 function sortList(sortedList) {
     let direction = 1;
     if (settings.sortDir === "desc") {
+        //console.log("if statement 1");
         direction = -1;
     } else  {
+        //console.log("if statement 2");
         settings.direction = 1;
     }
 
@@ -202,8 +224,10 @@ function sortList(sortedList) {
 
     function sortByProperty(studentA, studentB) {
         if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
+            //console.log("if statement 3");
             return -1 * direction;
         } else {
+            //console.log("if statement 4");
             return 1 * direction;
         }
     }
@@ -238,5 +262,5 @@ function displayStudent(student) {
     clone.querySelector("[data-field=house]").textContent = student.house;
 
     // append clone to list
-    document.querySelector("#list tbody").appendChild( clone );
+    document.querySelector("#list tbody").appendChild(clone);
 }
