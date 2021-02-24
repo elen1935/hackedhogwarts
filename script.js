@@ -49,33 +49,34 @@ async function loadJSON() {
 
 function prepareObjects( jsonData ) {
     jsonData.forEach( jsonObject => {
-        // we use "Student" prototype to create "newStudent"
-        const newStudent = Object.create(Student);
+        // we use "Student" prototype to create "student"
+        const student = Object.create(Student);
 
-        const fullName = jsonObject.fullname;
+        //const fullName = jsonObject.fullname;
         const house = jsonObject.house;
 
-        const firstSpace = fullName.indexOf(" ");
-        const lastSpace = fullName.lastIndexOf(" ");
+        const fullNameTrim = jsonObject.fullname.trim();
+        const firstSpace = fullNameTrim.indexOf(" ");
+        const lastSpace = fullNameTrim.lastIndexOf(" ");
 
         //FIRST NAME
-        let firstName = fullName.substring(0,firstSpace);
+        let firstName = fullNameTrim.substring(0,firstSpace);
         let firstNameTrim = firstName.trim();
         let firstNameFinal = firstNameTrim.charAt(0).toUpperCase() + firstNameTrim.substring(1).toLowerCase();
 
         //MIDDLE NAME
-        let middleName = fullName.substring(firstSpace+1, lastSpace);
+        let middleName = fullNameTrim.substring(firstSpace+1, lastSpace);
         let middleNameTrim = middleName.trim();
         let middleNameFinal = middleNameTrim.charAt(0).toUpperCase() + middleNameTrim.substring(1).toLowerCase();
         
         //LAST NAME
-        let lastName = fullName.substring(lastSpace);
+        let lastName = fullNameTrim.substring(lastSpace);
         let lastNameTrim = lastName.trim();
         let lastNameFinal = lastNameTrim.charAt(0).toUpperCase() + lastNameTrim.substring(1).toLowerCase();
        
 
         //FULLNAME
-        function showFullname(firstName, middleName, lastName){
+        /*function showFullname(firstName, middleName, lastName){
             if(middleName) {
             const fullNameFinal = `${firstNameFinal} ${middleNameFinal} ${lastNameFinal}`;
             //console.log(fullNameFinal);
@@ -84,20 +85,20 @@ function prepareObjects( jsonData ) {
             //console.log(fullNameFinal);
             }
         }
-        showFullname();
+        showFullname();*/
 
         //HOUSE
         let houseTrim = house.trim();
         let houseFinal = houseTrim.charAt(0).toUpperCase() + houseTrim.substring(1).toLowerCase();
 
-        newStudent.firstName = firstNameFinal;
-        newStudent.middleName = middleNameFinal;
-        newStudent.lastName = lastNameFinal;
+        student.firstName = firstNameFinal;
+        student.middleName = middleNameFinal;
+        student.lastName = lastNameFinal;
         //newStudent.nickName = nickNameFinal;
         //newStudent.imageFilename = ;
-        newStudent.house = houseFinal;
+        student.house = houseFinal;
 
-        allStudents.push(newStudent);
+        allStudents.push(student);
 
         
         /*
@@ -221,20 +222,20 @@ function displayList(allStudents) {
     document.querySelector("#list tbody").innerHTML = "";
 
     // build a new list
-    allStudents.forEach( displayStudent );
+    allStudents.forEach(displayStudent);
 }
 
-function displayStudent (newStudent) {
+function displayStudent(student) {
     // create clone
     const clone = document.querySelector("template#student").content.cloneNode(true);
 
     // set clone data
-    clone.querySelector("[data-field=firstName]").textContent = newStudent.firstName;
-    clone.querySelector("[data-field=lastName]").textContent = newStudent.lastName;
-    clone.querySelector("[data-field=middleName]").textContent = newStudent.middleName;
-    //clone.querySelector("[data-field=nickName]").textContent = newStudent.nickName;
-    //clone.querySelector("[data-field=imageFilename]").textContent = newStudent.; //imageFilename
-    clone.querySelector("[data-field=house]").textContent = newStudent.house;
+    clone.querySelector("[data-field=firstName]").textContent = student.firstName;
+    clone.querySelector("[data-field=lastName]").textContent = student.lastName;
+    clone.querySelector("[data-field=middleName]").textContent = student.middleName;
+    //clone.querySelector("[data-field=nickName]").textContent = student.nickName;
+    //clone.querySelector("[data-field=imageFilename]").textContent = student.; //imageFilename
+    clone.querySelector("[data-field=house]").textContent = student.house;
 
     // append clone to list
     document.querySelector("#list tbody").appendChild( clone );
