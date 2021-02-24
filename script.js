@@ -107,7 +107,7 @@ function displayStudent ( newStudent ) {
     clone.querySelector("[data-field=firstName]").textContent = newStudent.firstName;
     clone.querySelector("[data-field=lastName]").textContent = newStudent.lastName;
     clone.querySelector("[data-field=middleName]").textContent = newStudent.middleName;
-    clone.querySelector("[data-field=nickName]").textContent = newStudent.nickName;
+    //clone.querySelector("[data-field=nickName]").textContent = newStudent.nickName;
     //clone.querySelector("[data-field=imageFilename]").textContent = newStudent.; //imageFilename
     clone.querySelector("[data-field=house]").textContent = newStudent.house;
 
