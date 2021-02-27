@@ -274,9 +274,8 @@ function tryToMakeAPrefect(selectedStudent) {
     const prefects = allStudents.filter(student => student.prefect);
     
     const numberOfPrefects = prefects.length;
-    const other = prefects.filter(student => student.house === selectedStudent.house).shift();
+    const other = prefects.filter(student => student.gender === selectedStudent.gender).shift();
     
-    //////////FIX WHEREVER IT PUTS GENDER AND PUT HOUSE INSTEAD/////////////////
     //if there is another of the same gender
     if (other !== undefined) {
         console.log("IF STATEMENT 1");
