@@ -248,7 +248,7 @@ function displayStudent(student) {
     // defining the images
     const images = "images/" + student.lastName.toLowerCase();
     const img_path = "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
-    console.log(images + img_path);
+    //console.log(images + img_path);
     
     // set clone data
     clone.querySelector("[data-field=firstName]").textContent = student.firstName;
@@ -279,7 +279,13 @@ function displayStudent(student) {
         buildList();
     }
 
-    // append clone to list
+    //modal button
+    clone.querySelector(".image").addEventListener("click", clickModal);
+    function clickModal(event) {
+        showModal(student);
+    }
+
+    //append clone to list
     document.querySelector("#list tbody").appendChild(clone);
 }
 
@@ -417,3 +423,39 @@ function tryToMakeAPrefect(selectedStudent) {
     }
 }
 */
+
+function showModal(student) {
+    
+    let modalBackground = document.querySelector(".details_content");
+    let houseCrest = document.querySelector(".house_crest");
+
+
+    /*// defining the images
+    const images = "images/" + student.lastName.toLowerCase();
+    const img_path = "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+    clone.querySelector(".image").src = images + img_path;*/
+    
+    if (student.house === "Gryffindor") {
+    modalBackground.style.backgroundColor = "#E52C2C";
+    houseCrest.src = "images/gryffindor_crest.svg";
+    
+    } else if (student.house === "Hufflepuff") {
+    modalBackground.style.backgroundColor = "#CCB750";
+    houseCrest.src = "images/hufflepuff_crest.svg";
+    
+    } else if (student.house === "Ravenclaw") {
+    modalBackground.style.backgroundColor = "#093B54";
+    houseCrest.src = "images/ravenclaw_crest.svg";
+    
+    } else if (student.house === "Slytherin") {
+    modalBackground.style.backgroundColor = "#065B4B";
+    houseCrest.src = "images/slytherin_crest.svg";
+    }
+
+    document.querySelector("#details_wrapper").classList.remove("hide");
+    document.querySelector("#details_wrapper .closebutton").addEventListener("click", closeModal);
+    function closeModal() {
+        document.querySelector("#details_wrapper").classList.add("hide");
+        document.querySelector("#details_wrapper .closebutton").removeEventListener("click", closeModal);
+    }
+}
