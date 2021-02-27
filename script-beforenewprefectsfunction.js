@@ -6,14 +6,13 @@ const allStudents = [];
 
 //This defines a template (prototype) for the data objects
 const Student = {
-    firstName: "",
-    lastName: "",
-    middleName: null,
-    nickName: null,
-    imageFilename: "<no last name>",
-    gender: "",
-    house: "",
-    image: "",
+    firstName:"",
+    lastName:"",
+    middleName:"",
+    nickName:"",
+    imageFilename:"",
+    gender:"",
+    house:"",
     prefect: false
 }
 
@@ -97,7 +96,6 @@ function prepareObjects( jsonData ) {
     });
 
     displayList(allStudents);
-    // i think this should call the buildList not the displayList
 }
 
 function selectFilter(event) {
@@ -130,10 +128,6 @@ function filterList(filteredList) {
     } else if (settings.filterBy === "slytherin") {
     //create a filtered list of only Slytherin students
     filteredList = allStudents.filter(isSlytherin);
-    
-    } else {
-    //create a filtered list of all the students
-    filteredList = allStudents;
     }
 
     //TO DO: FILTER EXPELLED/NON-EXPELLED
@@ -245,11 +239,6 @@ function displayStudent(student) {
     // create clone
     const clone = document.querySelector("template#student").content.cloneNode(true);
 
-    // defining the images
-    const images = "../images/" + student.lastName.toLowerCase();
-    const img_path = "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
-    console.log(images + img_path);
-    
     // set clone data
     clone.querySelector("[data-field=firstName]").textContent = student.firstName;
     clone.querySelector("[data-field=lastName]").textContent = student.lastName;
@@ -258,9 +247,6 @@ function displayStudent(student) {
     //clone.querySelector("[data-field=imageFilename]").textContent = student.; //imageFilename
     clone.querySelector("[data-field=gender]").textContent = student.gender;
     clone.querySelector("[data-field=house]").textContent = student.house;
-    
-    //clone.querySelector("[data-field=image]").src = images + img_path;
-    clone.querySelector(".image").src = images + img_path;
 
 
     //prefects
@@ -273,8 +259,7 @@ function displayStudent(student) {
             student.prefect = false;
         } else {
             console.log("CLICK PREFECT - IF STATEMENT 2");
-            //tryToMakeAPrefect(student);
-            checkHouseToMakeAPrefect(student);
+            tryToMakeAPrefect(student);
         }
         buildList();
     }
@@ -283,49 +268,7 @@ function displayStudent(student) {
     document.querySelector("#list tbody").appendChild(clone);
 }
 
-/*
-function tryToMakeAPrefect(selectedStudent) {
 
-    //check student's house - (do i get student or house as a parameter here?)
-    function checkStudentHouse() {
-    }
-
-    //depending on the house, check state of prefects
-        //if 2 prefects already in the house -> ignore or remove
-        //if another prefect of the same gender -> ignore or remove
-}
-*/
-
-
-/*
-function checkHouseToMakeAPrefect(selectedStudent){
-    //getting a list of all the the prefects
-    const prefects = allStudents.filter(student => student.prefect);
-
-    //getting a list of all the prefects
-    const numberOfPrefects = prefects.length;
-    const other = prefects.filter(student => student.house === selectedStudent.house).shift();
-
-    console.log(`There are ${numberOfPrefects} prefects`);
-    //console.log(`The other prefect of this house is ${other.firstName}`);
-    console.log(other);
-
-    //just for testing
-    makePrefect(selectedStudent);
-
-
-    function removePrefect(prefectStudent) {
-        prefectStudent.prefect = false;
-    }
-
-    function makePrefect(student) {
-        student.prefect = true;
-    }
-}
-*/
-
-
-/*
 function tryToMakeAPrefect(selectedStudent) {
     console.log("TRY TO MAKE A PREFECT");
     const prefects = allStudents.filter(student => student.prefect);
@@ -416,4 +359,3 @@ function tryToMakeAPrefect(selectedStudent) {
         student.prefect = true;
     }
 }
-*/
