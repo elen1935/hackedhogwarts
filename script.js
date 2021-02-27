@@ -246,7 +246,7 @@ function displayStudent(student) {
     const clone = document.querySelector("template#student").content.cloneNode(true);
 
     // defining the images
-    const images = "../images/" + student.lastName.toLowerCase();
+    const images = "images/" + student.lastName.toLowerCase();
     const img_path = "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
     console.log(images + img_path);
     
