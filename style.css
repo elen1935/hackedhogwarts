@@ -79,3 +79,14 @@ button.closebutton {
   background-color: white;
   position: relative;
 }
+
+.image {
+  cursor: pointer;
+}
+
+/**STYLING IMAGES**/
+
+.house_crest {
+  height: 120px;
+  width: auto;
+}

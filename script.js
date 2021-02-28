@@ -10,7 +10,7 @@ const Student = {
     lastName: "",
     middleName: null,
     nickName: null,
-    imageFilename: "<no last name>",
+    //imageFilename: "<no last name>",
     gender: "",
     house: "",
     image: "",
@@ -426,15 +426,12 @@ function tryToMakeAPrefect(selectedStudent) {
 
 function showModal(student) {
     
+    //adding details of each student to the modal
+
     let modalBackground = document.querySelector(".details_content");
     let houseCrest = document.querySelector(".house_crest");
-
-
-    /*// defining the images
-    const images = "images/" + student.lastName.toLowerCase();
-    const img_path = "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
-    clone.querySelector(".image").src = images + img_path;*/
     
+    //house colors and crests
     if (student.house === "Gryffindor") {
     modalBackground.style.backgroundColor = "#E52C2C";
     houseCrest.src = "images/gryffindor_crest.svg";
@@ -452,8 +449,46 @@ function showModal(student) {
     houseCrest.src = "images/slytherin_crest.svg";
     }
 
+    //student details
+
+    const studentImage = document.querySelector(".student_image");
+    const images = "images/" + student.lastName.toLowerCase();
+    const img_path = "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+    
+    studentImage.src = images + img_path;
+
+
+    const firstName = document.querySelector(".modal_firstname");
+    firstName.textContent = student.firstName;
+
+    const middleName = document.querySelector(".modal_middlename");
+    middleName.textContent = student.middleName;
+    //add a "-" in case there's no middle name
+
+    const lastName = document.querySelector(".modal_lastname");
+    lastName.textContent = student.lastName;
+
+    const house = document.querySelector(".modal_house");
+    house.textContent = student.house;
+
+    /*
+    const bloodStatus = document.querySelector(".modal_bloodstatus");
+    bloodStatus.textContent = student.bloodStatus;
+    
+    const activeOrExpelled = document.querySelector(".modal_expelled");
+    activeOrExpelled.textContent = student.activeOrExpelled;
+    
+    const prefect = document.querySelector(".modal_prefect");
+    prefect.textContent = student.prefect;
+    
+    const squadMember = document.querySelector(".modal_squad");
+    squadMember.textContent = student.squadMember;
+    */
+
+    //adding event listeners to open and close modal
     document.querySelector("#details_wrapper").classList.remove("hide");
     document.querySelector("#details_wrapper .closebutton").addEventListener("click", closeModal);
+    
     function closeModal() {
         document.querySelector("#details_wrapper").classList.add("hide");
         document.querySelector("#details_wrapper .closebutton").removeEventListener("click", closeModal);
