@@ -10,7 +10,6 @@ const Student = {
     lastName: "",
     middleName: null,
     nickName: null,
-    //imageFilename: "<no last name>",
     gender: "",
     house: "",
     image: "",
@@ -273,8 +272,8 @@ function displayStudent(student) {
             student.prefect = false;
         } else {
             console.log("CLICK PREFECT - IF STATEMENT 2");
-            //tryToMakeAPrefect(student);
-            checkHouseToMakeAPrefect(student);
+            tryToMakeAPrefect(student);
+            //checkHouseToMakeAPrefect(student);
         }
         buildList();
     }
@@ -331,7 +330,7 @@ function checkHouseToMakeAPrefect(selectedStudent){
 */
 
 
-/*
+
 function tryToMakeAPrefect(selectedStudent) {
     console.log("TRY TO MAKE A PREFECT");
     const prefects = allStudents.filter(student => student.prefect);
@@ -422,7 +421,7 @@ function tryToMakeAPrefect(selectedStudent) {
         student.prefect = true;
     }
 }
-*/
+
 
 function showModal(student) {
     

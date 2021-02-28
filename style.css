@@ -22,8 +22,8 @@ td {
 
 /******** WINNERS *******/
 td[data-field="prefect"]::after {
-  /*content: "🛡️";*/
-  content: "🏆";
+  content: "🛡️";
+  /*content: "🏆";*/
   cursor: pointer;
 }
 
@@ -53,7 +53,7 @@ td[data-field="prefect"][data-prefect="false"]::after {
   box-shadow: 1px 1px 10px #333;
   border-radius: 12px;
   padding: 2em;
-  background-color: #ffe19e;
+  background-color: white;
   position: relative;
 }
 
